@@ -16,29 +16,29 @@ def init(vals):
     # TODO: inicializar punteros/estado
 
 def step():
-    def mergesort(list):
-        if len(list)==1:# TODO: implementar UN micro-paso de tu algoritmo y devolver el dict.
-            return list     # Recordá:
-        middle=len(list)//2# - a, b dentro de [0, n-1]
-        left_array=list[:middle]# - si swap=True, primero hacé el intercambio en 'items'
-        right_array=list[middle:]# - cuando termines, devolvé {"done": True}
+    def mergesort(n):
+        if len(n)==1:# TODO: implementar UN micro-paso de tu algoritmo y devolver el dict.
+            return n     # Recordá:
+        middle=len(n)//2# - a, b dentro de [0, n-1]
+        left_array=n[:middle]# - si swap=True, primero hacé el intercambio en 'items'
+        right_array=n[middle:]# - cuando termines, devolvé {"done": True}
         sorted_left_array=mergesort(left_array)
         sorted_right_array=mergesort(right_array)
         return merge(sorted_left_array,sorted_right_array)
-    def merge(left_list,right_list):
+    def merge(left_n,right_n):
         list_resultado=[]
-        while len(left_list)>0 and len(right_list)>0:
-            if left_list[0] > right_list[0]:
-                list_resultado.append(right_list[0])
-                right_list.pop(0)
+        while len(left_n)>0 and len(right_n)>0:
+            if left_n[0] > right_n[0]:
+                list_resultado.append(right_n[0])
+                right_n.pop(0)
             else:
-                 list_resultado.append(left_list[0])
-                 left_list.pop(0)
-        while len(left_list)>0:
-            list_resultado.append(left_list[0])
-            left_list.pop(0)
-        while len(right_list)>0:
-            list_resultado.append(right_list[0])
-            right_list.pop(0) 
+                 list_resultado.append(left_n[0])
+                 left_n.pop(0)
+        while len(left_n)>0:
+            list_resultado.append(left_n[0])
+            left_n.pop(0)
+        while len(right_n)>0:
+            list_resultado.append(right_n[0])
+            right_n.pop(0) 
         return list_resultado   
     return {"done": True}
