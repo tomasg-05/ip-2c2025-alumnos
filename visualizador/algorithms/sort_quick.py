@@ -24,7 +24,7 @@ def swap(idx1, idx2):
     return {"a": idx1, "b": idx2, "swap": True, "pivot": pivote_idx}
 
 def init(vals):
-    global items, n, pila, bajo,alto,i,pivote_v,pivote_indx,fase
+    global items, n, pila, bajo,alto,i,pivote_v,pivote_idx,fase,j
     items = list(vals)
     n = len(items)
 
@@ -32,8 +32,6 @@ def init(vals):
     pila = [(0, n - 1)] # Guardamos (bajo, alto)
 
     # Reinicializa el estado para el primer paso
-    bajo_ptr = 0
-    alto_ptr = 0
     i = 0
     j = 0
     pivote_v = 0
@@ -43,13 +41,14 @@ def init(vals):
    
 
 def step():
+    global items, n, pila, bajo, alto, i, j, pivote_v, pivote_idx, fase
     if not pila and fase == 0:
         return {"done": True}
     if fase == 0:
         if pila:
             # Sacamos el rango (bajo, alto) de la pila
-            bajo_ptr, alto_ptr = pila.pop()
-            if bajo_ptr >= alto_ptr:
+            bajo, alto= pila.pop()
+            if bajo >= alto:
                 # Si el rango es trivial (0 o 1 elemento), salta al siguiente
                 return step()
             
@@ -104,5 +103,5 @@ def step():
         fase = 0 # Vuelve a la fase de seleccion para el siguiente sub array
         pivote_idx = -1 # Limpia el pivote
         # Devuelve el paso final de la particion
-        return {"a": final_pivote_pos, "b": alto, "swap": True, "pivote": final_pivote_pos}
+        return {"a": final_pivote_pos, "b": alto, "swap": True, "pivot": final_pivote_pos}
     return {"done": True}
