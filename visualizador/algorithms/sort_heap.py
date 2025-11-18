@@ -47,9 +47,9 @@ def step():
         j=None
         return{"a":0, "b":0, "swap":False, "done":False}
 
-if fase == "sort":
-    if i <= 0:
-        return{"done":True}
+    if fase == "sort":
+        if i <= 0:
+            return{"done":True}
     if j == 0:
         a, b = 0, i
         items[a], items[b] = items[b], items[a]
