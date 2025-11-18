@@ -18,10 +18,10 @@ pivote_idx= -1 #indice final del pivote
 fase = 0 
 
 def swap(idx1, idx2):
-    """Intercambia dos elementos en la lista global."""
-    global items
-    items[idx1], items[idx2] = items[idx2], items[idx1]
-    return {"a": idx1, "b": idx2, "swap": True, "pivot": pivote_idx}
+  """Intercambia dos elementos en la lista global."""
+  global items, pivote_idx # <--- ¡CORRECCIÓN! Ahora es global
+  items[idx1], items[idx2] = items[idx2], items[idx1]
+  return {"a": idx1, "b": idx2, "swap": True, "pivot": pivote_idx}
 
 def init(vals):
     global items, n, pila, bajo,alto,i,pivote_v,pivote_idx,fase,j
