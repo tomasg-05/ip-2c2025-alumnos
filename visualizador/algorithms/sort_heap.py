@@ -2,7 +2,7 @@
 # Contrato: init(vals), step() -> {"a": int, "b": int, "swap": bool, "done": bool}
 
 items = []
-#punteros/estado
+#punteros/estados
 n = 0
 i=0
 j=0
@@ -68,14 +68,13 @@ def step():
     
     if right <= i and items[right] > items[left]:
         mayor = right
+    if items[mayor] >  items[j]:
+        a, b = j, mayor
+        items[a], items[b] = items[b], items[a]
+        j = mayor
+        return{"a":a, "b": b, "swap":True, "done":False}
+    else:
+        j= 0
+        return{"a":0, "b":0, "swap":False, "done":False}
 
 
-    
-    
-
-    # TODO: implementar UN micro-paso de tu algoritmo y devolver el dict.
-    # Recordá:
-    # - a, b dentro de [0, n-1]
-    # - si swap=True, primero hacé el intercambio en 'items'
-    # - cuando termines, devolvé {"done": True}
-    
