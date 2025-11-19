@@ -6,8 +6,8 @@ items = []
 n = 0
 i=0
 j=0
-fase= "build" 
-stack= [] 
+fase= "build"
+stack= []
 
 def init(vals):
     global items, n, i, j, fase, stack
@@ -21,60 +21,58 @@ def init(vals):
 def step():
     global items, n, i, j, fase, stack
     if fase == "build":
-        fase= "sort"
-        i= n-1
-        j= 0
-        return {"a":0,"b":0,"swap":False,"done":False}
-    if j is None:
-        j= i
-        stack=[]
-    left= 2*j + 1
-    right= 2*j + 2
-    if left >= n:
-        i-=1
-        j=None
-        return{"a":0, "b":0, "swap":False, "done":False}
-    mayor = left
-    if right < n and items[right] > items[left]:
-        mayor= right
-    if items[mayor] > items[j]:
-        a, b= j, mayor
-        items[a], items[b] =items[b], items[a]
-        j= mayor
-        return{"a":0, "b":0, "swap":True, "done":False}
-    else:
-        i-=1
-        j=None
-        return{"a":0, "b":0, "swap":False, "done":False}
-
+        if i < 0:
+            fase = "sort"
+            i = n-1
+            j = None
+            return {"a":0,"b":0,"swap":False,"done":False}
+        if j is None:
+            j = i
+            stack = []
+        left = 2*j + 1
+        right = 2*j + 2
+        if left >= n:
+            i -= 1
+            j = None
+            return {"a":j,"b":left,"swap":False,"done":False}
+        mayor = left
+        if right < n and items[right] > items[left]:
+            mayor = right
+        if items[mayor] > items[j]:
+            a, b = j, mayor
+            items[a], items[b] = items[b], items[a]
+            j = mayor
+            return {"a":a,"b":b,"swap":True,"done":False}
+        else:
+            i -= 1
+            j = None
+            return {"a":j,"b":mayor,"swap":False,"done":False}
     if fase == "sort":
         if i <= 0:
-            return{"done":True}
-    if j == 0:
-        a, b = 0, i
-        items[a], items[b] = items[b], items[a]
-        i-= 1
-        j= 0
-        return{"a":a, "b":b, "swap":True, "done":False}
-    
-    left= 2*j + 1
-    right= 2*j + 2
-    
-    if left > i:
-        j = 0
-        return{"a": 0, "b": 0, "swap": False, "done": False}
-   
-    mayor = left
-    
-    if right <= i and items[right] > items[left]:
-        mayor = right
-    if items[mayor] >  items[j]:
-        a, b = j, mayor
-        items[a], items[b] = items[b], items[a]
-        j = mayor
-        return{"a":a, "b": b, "swap":True, "done":False}
-    else:
-        j= 0
-        return{"a":0, "b":0, "swap":False, "done":False}
+            return {"done":True}
+        if j is None:
+            a, b = 0, i
+            items[a], items[b] = items[b], items[a]
+            i -= 1
+            j = 0
+            stack = []
+            return {"a":a,"b":b,"swap":True,"done":False}
+        left = 2*j + 1
+        right = 2*j + 2
+        if left > i:
+            j = 0
+            return {"a":j,"b":left,"swap":False,"done":False}
+        mayor = left
+        if right <= i and items[right] > items[left]:
+            mayor = right
+        if items[mayor] > items[j]:
+            a, b = j, mayor
+            items[a], items[b] = items[b], items[a]
+            j = mayor
+            return {"a":a,"b":b,"swap":True,"done":False}
+        else:
+            j = 0
+            return {"a":j,"b":mayor,"swap":False,"done":False}
+
 
 
