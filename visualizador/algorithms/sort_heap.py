@@ -2,7 +2,7 @@
 # Contrato: init(vals), step() -> {"a": int, "b": int, "swap": bool, "done": bool}
 
 items = []
-#punteros/estado
+#punteros/estados
 n = 0
 i=0
 j=0
