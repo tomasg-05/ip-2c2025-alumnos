@@ -6,6 +6,8 @@ from heapq import merge
 
 items = []
 n = 0
+task = []
+merge = None
 # Agregá acá tus punteros/estado, p.ej.:
 # i = 0; j = 0; fase = "x"; stack = []
 
@@ -13,7 +15,7 @@ def init(vals):
     global items, n, task, merge
     items = list(vals)
     n = len(items)
-    task=[(0,n)]
+    task=[("split",0,n)]
     merge=None
     # TODO: inicializar punteros/estado
 
@@ -24,8 +26,7 @@ def step():
         i, j, w = merge["i"], merge["j"], merge["w"]
         ls, rs = merge["ls"], merge["rs"]
         if i < len(L) and j < len(R):
-            a=ls + i
-            b=rs + j
+            a, b = ls + i, rs + j
             if L[i] <= R[j]:
                 items[w] = L[i]
                 i+=1
@@ -46,27 +47,23 @@ def step():
         return {"a": 0, "b": 0, "swap": False, "done": False}
     if not task:
         return {"done": True}
-    l, r = task.pop()
-    if r - l <= 1:
-        return {"a": l, "b": l, "swap": False, "done": False}
-    m = (l + r) // 2
-    if task and task[-1] == (l, r):
-        task.pop()
-        merge = {
-            "L": items[l:m],
-            "R": items[m:r],
-            "i": 0,
-            "j": 0,
-            "w": l,
-            "ls": l,
-            "rs": m
-        }
-        return {"a": l, "b": m, "swap": False, "done": False}
-    task.append((l, r))
-    task.append((m, r))
-    task.append((l, m))
-    
-    return {"a": l, "b": r - 1, "swap": False, "done": False}
+    tipo,l, r = task.pop()
+    if tipo == "split":
+        if r - l <= 1:
+            return {"a": l, "b": l, "swap": False, "done": False}
+        m = (l + r) // 2
+        task.append(("merge",l, r))
+        task.append(("split",m, r))
+        task.append(("split",l, m))    
+        return {"a": l, "b": r-1, "swap": False, "done": False}
+    elif tipo == "merge":       
+        m = (l + r) // 2
+        L= items[l:r].copy()
+        R = items[m:r].copy()
+        merge = {"L": L, "R": R, "i": 0, "j": 0, "w": l, "ls": l, "rs": m}
+        return {"a": l, "b": m-1, "swap": False, "done": False}
+
+
 
 #    def mergesort(n):
  #       if len(n)==1:# TODO: implementar UN micro-paso de tu algoritmo y devolver el dict.
