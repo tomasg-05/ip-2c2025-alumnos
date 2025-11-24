@@ -46,9 +46,4 @@ def step():
     #Movemos el cursor "j" al siguiente par para el proximo step()
     j= j + 1
     # Retorna el estado del micro paso  
-    return {
-        "a":a,
-        "b":b,
-        "swap": swap,
-        "done": False,
-    }
+    return {"a": a, "b": b, "swap": swap, "done": False}
