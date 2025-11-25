@@ -21,7 +21,7 @@ def step():
         L, R = merge["L"], merge["R"]
         i, j, w = merge["i"], merge["j"], merge["w"]
         ls, rs = merge["ls"], merge["rs"]
-        if i < len(L) and j < len(R):
+        if i < len(L) and j < len(R): #Comparación de elementos de L y R
             a, b = ls + i, rs + j
             if L[i] <= R[j]:
                 items[w] = L[i]
@@ -31,20 +31,20 @@ def step():
                 j += 1
             merge["i"], merge["j"], merge["w"] = i, j, w + 1
             return {"a": a, "b": b, "swap": False, "done": False}
-        if i < len(L):
+        if i < len(L): #Copia elementos restantes de L
             items[w] = L[i]
             merge["i"], merge["w"] = i + 1, w + 1
             return {"a": w, "b": w, "swap": False, "done": False}
-        if j < len(R):
+        if j < len(R): #Copia elementos restantes de R
             items[w] = R[j]
             merge["j"], merge["w"] = j + 1, w + 1
             return {"a": w, "b": w, "swap": False, "done": False}
-        merge = None
+        merge = None #Fin de la Fusión Actual
         return {"a": 0, "b": 0, "swap": False, "done": False}
     if not task:
         return {"done": True}
     tipo,l, r = task.pop()
-    if tipo == "split":
+    if tipo == "split": #Tarea 'split' (División Recursiva)
         if r - l <= 1:
             return {"a": l, "b": l, "swap": False, "done": False}
         m = (l + r) // 2
@@ -52,7 +52,7 @@ def step():
         task.append(("split",m, r))
         task.append(("split",l, m))    
         return {"a": l, "b": r-1, "swap": False, "done": False}
-    elif tipo == "merge":       
+    elif tipo == "merge": #Tarea 'merge' (Inicialización de Fusión)      
         m = (l + r) // 2
         L= items[l:r].copy()
         R = items[m:r].copy()
